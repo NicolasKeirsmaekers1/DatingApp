@@ -51,9 +51,11 @@ namespace API.Data
             _context.Entry(user).State = EntityState.Modified;
         }
 
-        public Task<IEnumerable<MemberDto>> GetMembersAsync()
+        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Users
+                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
         }
 
         public async Task<MemberDto> GetMemberAsync(string username)
